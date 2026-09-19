@@ -1,0 +1,1104 @@
+Eh. Za mu fara da ABGO V1 yanzu. 🔥🇳🇬
+Za mu yi functional prototype mai aiki da browser, wanda za ka iya buɗewa a waya. Ya ƙunshi Home, Search, Jobs, Opportunities, Price Checker, Services, Scam Alert, Profile da Settings.
+Writing
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABGO — Your Life On Your Hand</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7f9;
+  color: #17202a;
+  padding-bottom: 75px;
+}
+
+header {
+  background: #0b7a4b;
+  color: white;
+  padding: 22px 18px;
+  border-radius: 0 0 24px 24px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.tagline {
+  margin-top: 5px;
+  opacity: .9;
+  font-size: 13px;
+}
+
+.search-box {
+  margin-top: 20px;
+  background: white;
+  border-radius: 14px;
+  padding: 13px;
+  display: flex;
+  gap: 10px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+}
+
+.container {
+  padding: 18px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 22px 0 12px;
+}
+
+.section-title h2 {
+  font-size: 19px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.card {
+  background: white;
+  border-radius: 17px;
+  padding: 18px 14px;
+  min-height: 120px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.06);
+  cursor: pointer;
+  transition: .2s;
+}
+
+.card:active {
+  transform: scale(.97);
+}
+
+.icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-size: 15px;
+}
+
+.card p {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+.feature {
+  background: #17202a;
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 14px;
+}
+
+.feature h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.feature p {
+  font-size: 13px;
+  opacity: .85;
+  line-height: 1.5;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 14px;
+  background: white;
+  color: #17202a;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.list-item {
+  background: white;
+  padding: 16px;
+  border-radius: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.list-item h3 {
+  font-size: 16px;
+}
+
+.list-item p {
+  color: #68707a;
+  font-size: 13px;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 9px;
+  padding: 5px 8px;
+  background: #e7f7ef;
+  color: #087443;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.price {
+  font-size: 19px;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 67px;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  z-index: 100;
+}
+
+.nav-btn {
+  border: none;
+  background: none;
+  color: #7b8490;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.nav-btn span {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 3px;
+}
+
+.nav-btn.active {
+  color: #0b7a4b;
+  font-weight: bold;
+}
+
+.form {
+  background: white;
+  padding: 18px;
+  border-radius: 16px;
+  margin-bottom: 15px;
+}
+
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: 1px solid #dce1e5;
+  border-radius: 10px;
+  outline: none;
+}
+
+.primary {
+  width: 100%;
+  background: #0b7a4b;
+  color: white;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.empty {
+  text-align: center;
+  padding: 35px 15px;
+  color: #747b84;
+}
+
+.result-title {
+  margin: 18px 0 12px;
+  font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+<header>
+  <div class="logo">ABGO 🇳🇬</div>
+  <div class="tagline">Your Life On Your Hand</div>
+
+  <div class="search-box">
+    <input
+      id="homeSearch"
+      type="text"
+      placeholder="What do you need today?"
+      onkeydown="homeSearch(event)"
+    >
+    <span>🔎</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="feature">
+    <h2>Welcome to ABGO 👋</h2>
+    <p>
+      Find jobs, opportunities, prices, local services,
+      safety information and useful tools in one place.
+    </p>
+    <button class="btn" onclick="showPage('assistant')">
+      🤖 Ask ABGO
+    </button>
+  </div>
+
+  <div class="section-title">
+    <h2>Quick Access</h2>
+  </div>
+
+  <div class="grid">
+
+    <div class="card" onclick="showPage('jobs')">
+      <div class="icon">💼</div>
+      <h3>Jobs</h3>
+      <p>Find work opportunities.</p>
+    </div>
+
+    <div class="card" onclick="showPage('opportunities')">
+      <div class="icon">🎓</div>
+      <h3>Opportunities</h3>
+      <p>Scholarships, grants and training.</p>
+    </div>
+
+    <div class="card" onclick="showPage('prices')">
+      <div class="icon">🛒</div>
+      <h3>Price Checker</h3>
+      <p>Check and compare prices.</p>
+    </div>
+
+    <div class="card" onclick="showPage('services')">
+      <div class="icon">🔧</div>
+      <h3>Local Services</h3>
+      <p>Find useful service providers.</p>
+    </div>
+
+    <div class="card" onclick="showPage('scam')">
+      <div class="icon">🚨</div>
+      <h3>Scam Alert</h3>
+      <p>Check and report suspicious activity.</p>
+    </div>
+
+    <div class="card" onclick="showPage('government')">
+      <div class="icon">🧾</div>
+      <h3>Government</h3>
+      <p>Guides for official services.</p>
+    </div>
+
+    <div class="card" onclick="showPage('help')">
+      <div class="icon">🏥</div>
+      <h3>Find Help</h3>
+      <p>Emergency and important services.</p>
+    </div>
+
+    <div class="card" onclick="showPage('calculators')">
+      <div class="icon">🧮</div>
+      <h3>Calculators</h3>
+      <p>Useful Nigerian calculators.</p>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- JOBS -->
+<section id="jobs" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>💼 Jobs</h2>
+</div>
+
+<div class="form">
+<input id="jobSearch" placeholder="Search jobs..." oninput="filterJobs()">
+</div>
+
+<div id="jobList"></div>
+
+</div>
+</section>
+
+
+<!-- OPPORTUNITIES -->
+<section id="opportunities" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🎓 Opportunities</h2>
+</div>
+
+<div class="list-item">
+<h3>Scholarship Opportunities</h3>
+<p>Discover scholarship opportunities and education resources.</p>
+<span class="badge">Education</span>
+</div>
+
+<div class="list-item">
+<h3>Free Skills Training</h3>
+<p>Find free training programmes that can help you develop useful skills.</p>
+<span class="badge">Training</span>
+</div>
+
+<div class="list-item">
+<h3>Internships</h3>
+<p>Explore internship and early-career opportunities.</p>
+<span class="badge">Career</span>
+</div>
+
+<div class="list-item">
+<h3>Business Grants</h3>
+<p>Find information about legitimate grant programmes.</p>
+<span class="badge">Business</span>
+</div>
+
+</div>
+</section>
+
+
+<!-- PRICES -->
+<section id="prices" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🛒 Price Checker</h2>
+</div>
+
+<div class="form">
+<input id="priceSearch" placeholder="Search product..." oninput="filterPrices()">
+</div>
+
+<div id="priceList"></div>
+
+</div>
+</section>
+
+
+<!-- SERVICES -->
+<section id="services" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🔧 Local Services</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">⚡</div>
+<h3>Electrician</h3>
+<p>Find electricians around your area.</p>
+</div>
+
+<div class="card">
+<div class="icon">🚿</div>
+<h3>Plumber</h3>
+<p>Find plumbing services.</p>
+</div>
+
+<div class="card">
+<div class="icon">🚗</div>
+<h3>Mechanic</h3>
+<p>Find vehicle repair services.</p>
+</div>
+
+<div class="card">
+<div class="icon">📱</div>
+<h3>Phone Repair</h3>
+<p>Find phone technicians.</p>
+</div>
+
+<div class="card">
+<div class="icon">🧵</div>
+<h3>Tailor</h3>
+<p>Find tailoring services.</p>
+</div>
+
+<div class="card">
+<div class="icon">❄️</div>
+<h3>AC Technician</h3>
+<p>Find AC repair services.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- SCAM -->
+<section id="scam" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🚨 Scam Alert</h2>
+</div>
+
+<div class="form">
+<h3>Check a phone number</h3>
+<input id="scamNumber" placeholder="Enter phone number">
+<button class="primary" onclick="checkScam()">
+Check Number
+</button>
+<p id="scamResult"></p>
+</div>
+
+<div class="list-item">
+<h3>🛡️ Safety Tip</h3>
+<p>Never send money because someone promises guaranteed profit, a job, prize or urgent assistance without verification.</p>
+</div>
+
+</div>
+</section>
+
+
+<!-- GOVERNMENT -->
+<section id="government" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🧾 Government Services</h2>
+</div>
+
+<div class="list-item">
+<h3>NIN Services</h3>
+<p>Guides for accessing legitimate NIN-related services.</p>
+</div>
+
+<div class="list-item">
+<h3>International Passport</h3>
+<p>Step-by-step information for passport application processes.</p>
+</div>
+
+<div class="list-item">
+<h3>Driver's Licence</h3>
+<p>Learn about the application and renewal process.</p>
+</div>
+
+<div class="list-item">
+<h3>CAC Registration</h3>
+<p>Information about registering a business officially.</p>
+</div>
+
+</div>
+</section>
+
+
+<!-- FIND HELP -->
+<section id="help" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🏥 Find Help</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🏥</div>
+<h3>Hospital</h3>
+<p>Find nearby medical facilities.</p>
+</div>
+
+<div class="card">
+<div class="icon">💊</div>
+<h3>Pharmacy</h3>
+<p>Find pharmacies.</p>
+</div>
+
+<div class="card">
+<div class="icon">👮</div>
+<h3>Police</h3>
+<p>Find police resources.</p>
+</div>
+
+<div class="card">
+<div class="icon">🚒</div>
+<h3>Fire Service</h3>
+<p>Find fire emergency resources.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- CALCULATORS -->
+<section id="calculators" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🧮 Calculators</h2>
+</div>
+
+<div class="form">
+
+<h3>Business Profit</h3>
+
+<input id="cost" type="number" placeholder="Cost price">
+<input id="selling" type="number" placeholder="Selling price">
+<input id="quantity" type="number" placeholder="Quantity">
+
+<button class="primary" onclick="calculateProfit()">
+Calculate
+</button>
+
+<p id="profitResult" style="margin-top:15px;font-weight:bold;"></p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ASSISTANT -->
+<section id="assistant" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>🤖 Nigeria Assistant</h2>
+</div>
+
+<div class="form">
+
+<p>
+Ask ABGO about jobs, services, opportunities,
+prices or useful information.
+</p>
+
+<input id="question" placeholder="Type your question...">
+
+<button class="primary" onclick="askAssistant()">
+Ask ABGO
+</button>
+
+<div id="assistantResult" style="margin-top:15px;line-height:1.6;"></div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- PROFILE -->
+<section id="profile" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>👤 Profile</h2>
+</div>
+
+<div class="form">
+<input id="name" placeholder="Your name">
+<input id="location" placeholder="Your state/city">
+<button class="primary" onclick="saveProfile()">
+Save Profile
+</button>
+
+<p id="profileResult" style="margin-top:15px;"></p>
+</div>
+
+</div>
+</section>
+
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+<div class="container">
+
+<div class="section-title">
+<h2>⚙️ Settings</h2>
+</div>
+
+<div class="list-item">
+<h3>Language</h3>
+<p>English / Hausa</p>
+</div>
+
+<div class="list-item">
+<h3>Notifications</h3>
+<p>Jobs, opportunities and important alerts.</p>
+</div>
+
+<div class="list-item">
+<h3>Privacy</h3>
+<p>Control your account and app data.</p>
+</div>
+
+</div>
+</section>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+<button class="nav-btn active" onclick="showPage('home', this)">
+<span>🏠</span>
+Home
+</button>
+
+<button class="nav-btn" onclick="showPage('jobs', this)">
+<span>💼</span>
+Jobs
+</button>
+
+<button class="nav-btn" onclick="showPage('opportunities', this)">
+<span>🎓</span>
+Learn
+</button>
+
+<button class="nav-btn" onclick="showPage('services', this)">
+<span>🔧</span>
+Services
+</button>
+
+<button class="nav-btn" onclick="showPage('profile', this)">
+<span>👤</span>
+Profile
+</button>
+
+</nav>
+
+
+<script>
+
+const jobs = [
+  {
+    title: "Customer Service Representative",
+    company: "Example Company",
+    location: "Lagos",
+    type: "Full-time"
+  },
+  {
+    title: "Data Entry Assistant",
+    company: "Example Business",
+    location: "Remote",
+    type: "Remote"
+  },
+  {
+    title: "Sales Assistant",
+    company: "Example Store",
+    location: "Abuja",
+    type: "Full-time"
+  },
+  {
+    title: "Social Media Assistant",
+    company: "Example Agency",
+    location: "Remote",
+    type: "Part-time"
+  }
+];
+
+const prices = [
+  {
+    product: "Rice 50kg",
+    price: "User-reported",
+    location: "Nigeria"
+  },
+  {
+    product: "Cement",
+    price: "User-reported",
+    location: "Nigeria"
+  },
+  {
+    product: "Cooking Gas",
+    price: "User-reported",
+    location: "Nigeria"
+  },
+  {
+    product: "Petrol",
+    price: "User-reported",
+    location: "Nigeria"
+  }
+];
+
+
+function showPage(pageId, button) {
+
+  document.querySelectorAll(".page")
+    .forEach(page => page.classList.remove("active"));
+
+  const page = document.getElementById(pageId);
+
+  if (page) {
+    page.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if (button) {
+    button.classList.add("active");
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+function homeSearch(event) {
+
+  if (event.key !== "Enter") return;
+
+  const query =
+    document.getElementById("homeSearch")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if (!query) return;
+
+  if (
+    query.includes("job") ||
+    query.includes("work") ||
+    query.includes("aiki")
+  ) {
+    showPage("jobs");
+  }
+
+  else if (
+    query.includes("scholarship") ||
+    query.includes("grant") ||
+    query.includes("training") ||
+    query.includes("karatu")
+  ) {
+    showPage("opportunities");
+  }
+
+  else if (
+    query.includes("price") ||
+    query.includes("farashi") ||
+    query.includes("rice") ||
+    query.includes("cement")
+  ) {
+    showPage("prices");
+  }
+
+  else if (
+    query.includes("electrician") ||
+    query.includes("plumber") ||
+    query.includes("mechanic") ||
+    query.includes("service")
+  ) {
+    showPage("services");
+  }
+
+  else {
+    showPage("assistant");
+    document.getElementById("question").value =
+      document.getElementById("homeSearch").value;
+  }
+}
+
+
+function renderJobs(list = jobs) {
+
+  const box = document.getElementById("jobList");
+
+  if (!list.length) {
+    box.innerHTML =
+      '<div class="empty">No jobs found.</div>';
+    return;
+  }
+
+  box.innerHTML = list.map(job => `
+    <div class="list-item">
+      <h3>${job.title}</h3>
+      <p>${job.company}</p>
+      <p>📍 ${job.location} • ${job.type}</p>
+      <span class="badge">Job Opportunity</span>
+    </div>
+  `).join("");
+}
+
+
+function filterJobs() {
+
+  const q =
+    document.getElementById("jobSearch")
+    .value
+    .toLowerCase();
+
+  const filtered = jobs.filter(job =>
+    (
+      job.title +
+      " " +
+      job.company +
+      " " +
+      job.location +
+      " " +
+      job.type
+    )
+    .toLowerCase()
+    .includes(q)
+  );
+
+  renderJobs(filtered);
+}
+
+
+function renderPrices(list = prices) {
+
+  const box = document.getElementById("priceList");
+
+  box.innerHTML = list.map(item => `
+    <div class="list-item">
+      <h3>${item.product}</h3>
+      <div class="price">${item.price}</div>
+      <p>📍 ${item.location}</p>
+    </div>
+  `).join("");
+}
+
+
+function filterPrices() {
+
+  const q =
+    document.getElementById("priceSearch")
+    .value
+    .toLowerCase();
+
+  const filtered = prices.filter(item =>
+    item.product.toLowerCase().includes(q)
+  );
+
+  renderPrices(filtered);
+}
+
+
+function checkScam() {
+
+  const number =
+    document.getElementById("scamNumber").value.trim();
+
+  const result =
+    document.getElementById("scamResult");
+
+  if (!number) {
+    result.innerHTML =
+      "<br>Please enter a phone number.";
+    return;
+  }
+
+  result.innerHTML = `
+    <br>
+    <strong>ABGO Safety Check:</strong><br>
+    This V1 prototype has no verified scam database yet.
+    Do not send money until the person or business is independently verified.
+  `;
+}
+
+
+function calculateProfit() {
+
+  const cost =
+    Number(document.getElementById("cost").value);
+
+  const selling =
+    Number(document.getElementById("selling").value);
+
+  const quantity =
+    Number(document.getElementById("quantity").value);
+
+  const result =
+    document.getElementById("profitResult");
+
+  if (
+    !cost ||
+    !selling ||
+    !quantity ||
+    quantity <= 0
+  ) {
+    result.innerText =
+      "Please enter valid values.";
+    return;
+  }
+
+  const profit =
+    (selling - cost) * quantity;
+
+  result.innerText =
+    "Estimated Profit: ₦" +
+    profit.toLocaleString();
+}
+
+
+function askAssistant() {
+
+  const q =
+    document.getElementById("question")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const result =
+    document.getElementById("assistantResult");
+
+  if (!q) {
+    result.innerText =
+      "Please type a question.";
+    return;
+  }
+
+  if (
+    q.includes("job") ||
+    q.includes("aiki")
+  ) {
+    result.innerHTML =
+      "💼 Try the <strong>Jobs</strong> section to search for available opportunities.";
+  }
+
+  else if (
+    q.includes("service") ||
+    q.includes("electrician") ||
+    q.includes("plumber") ||
+    q.includes("mechanic")
+  ) {
+    result.innerHTML =
+      "🔧 Open <strong>Local Services</strong> to find the type of service you need.";
+  }
+
+  else if (
+    q.includes("price") ||
+    q.includes("farashi")
+  ) {
+    result.innerHTML =
+      "🛒 Open <strong>Price Checker</strong> to search products and compare reported prices.";
+  }
+
+  else if (
+    q.includes("scam") ||
+    q.includes("fraud")
+  ) {
+    result.innerHTML =
+      "🚨 Open <strong>Scam Alert</strong> before sending money to an unfamiliar person or business.";
+  }
+
+  else {
+    result.innerHTML =
+      "🤖 I'm still being developed. In the next ABGO version, the Assistant will use AI to understand Hausa and English questions and connect you with relevant ABGO services.";
+  }
+}
+
+
+function saveProfile() {
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const location =
+    document.getElementById("location").value.trim();
+
+  const result =
+    document.getElementById("profileResult");
+
+  if (!name || !location) {
+    result.innerText =
+      "Please enter your name and location.";
+    return;
+  }
+
+  localStorage.setItem(
+    "abgo_name",
+    name
+  );
+
+  localStorage.setItem(
+    "abgo_location",
+    location
+  );
+
+  result.innerText =
+    "Profile saved successfully.";
+}
+
+
+function loadProfile() {
+
+  const name =
+    localStorage.getItem("abgo_name");
+
+  const location =
+    localStorage.getItem("abgo_location");
+
+  if (name) {
+    document.getElementById("name").value = name;
+  }
+
+  if (location) {
+    document.getElementById("location").value = location;
+  }
+}
+
+
+renderJobs();
+renderPrices();
+loadProfile();
+
+</script>
+
+</body>
+</html>
+📱 Yadda za ka gwada shi a Termux
+Buɗe Termux.
+Ka rubuta:
+Bash
+mkdir -p ~/abgo
+cd ~/abgo
+nano index.html
+Ka paste code ɗin gaba ɗaya.
+Ka danna CTRL + O, sannan Enter.
+Ka danna CTRL + X.
+Sai ka buɗe index.html da browser ɗinka.
+Wannan V1 prototype ne: UI da basic interactions suna aiki, amma jobs/prices/services har yanzu sample data ne. V2 za mu haɗa real database, authenticatio
